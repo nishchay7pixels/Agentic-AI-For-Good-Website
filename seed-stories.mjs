@@ -16,9 +16,15 @@ const stories = JSON.parse(readFileSync('stories.json', 'utf-8'));
 
 async function seed() {
   for (const story of stories) {
+    const payload = {
+      ...story,
+      published: story.published ?? true,
+      featured: story.featured ?? false,
+    };
+
     const { data, error } = await supabase
       .from('stories')
-      .upsert({ ...story, published: true }, { onConflict: 'slug' })
+      .upsert(payload, { onConflict: 'slug' })
       .select();
 
     if (error) {

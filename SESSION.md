@@ -1,65 +1,55 @@
-# Session Log
+# Session Notes
 
-Track what's happening across Claude Code sessions. Update this at the end of each working session.
+## 2026-03-27
 
----
+### Milestone: repo audit complete
+- Goal: standardize all 9 blog/story cover images to a canonical square `1080x1080` system and make website rendering consistent.
+- Confirmed current story/blog assets live under `public/images/stories/` and currently use slug-based filenames from `stories.json`.
+- Confirmed current website inconsistency is primarily rendering-related:
+  - story grid uses a square wrapper
+  - story detail view does not enforce the same square aspect ratio
+- Confirmed the local generator script is out of sync with current assets and still assumes an older non-canonical size.
+- Execution approach for this session:
+  - inspect existing Canva designs via Canva MCP as the design reference
+  - rebuild the 9 local story covers to match a single square visual system
+  - update generator + rendering code to enforce the canonical square contract
+  - verify assets and page behavior
 
-## Current Focus
-Building the AI tool discovery platform. Primary product is a curated, searchable directory of AI tools + knowledge base. Offline events + GTM for tools = revenue. Editorial stories are secondary (adds soul, not the highlight).
+### Milestone: Canva recreation set chosen
+- Canva MCP references selected from the connected account:
+  - `AgentAI For Good Post 1`
+  - `AgentAI For Good Post 2`
+  - `Copy of What is AgentAI For Good Post 3`
+- Reference pattern locked for local rebuild:
+  - square social tile composition
+  - dark charcoal base
+  - large white editorial title block
+  - small uppercase top label
+  - restrained accent line and translucent circles
+- Local rebuild will mirror this visual system while preserving repo slug-based asset paths.
 
-## Session 3 — March 17, 2026 (evening)
-### What was done:
-- Finalized the narrative pivot: Agentic AI For Good = tool discovery platform, NOT just editorial
-- Defined the value prop: help builders find what's already in the market so they stop prompting AI daily for research
-- Identified revenue model: tools pay for GTM (featured listings ₹15-30K/mo, sponsored stories ₹40-80K, event sponsorship ₹50K-2L)
-- Created 6-month growth budget: ~₹5.5L to acquire 5,000+ readers
-- Channels: LinkedIn organic + offline events (colleges/meetups) + LinkedIn ads + college ambassadors + WhatsApp/Telegram community
-- Updated AGENT.md, SESSION.md, BUSINESS_STRATEGY.md to reflect new positioning
-- Committed and pushed project context files to GitHub
+### Milestone: local asset replacement complete
+- Rebuilt the story-cover generator to target a canonical square `1080x1080` canvas.
+- Updated the visual system to match the Canva references more closely:
+  - dark charcoal background
+  - large editorial white title block
+  - small top label and restrained accent treatment
+- Regenerated all story-cover assets from the current `stories.json` source of truth.
+- Note: the local story inventory is now `12` stories, not the earlier `9`, so regeneration was applied to all 12 current slugs under `public/images/stories/`.
 
-### What's next:
-- [ ] **CRITICAL: Migrate HashRouter → BrowserRouter** (SEO is broken without this)
-- [ ] Add robots.txt + sitemap.xml + Google Search Console
-- [ ] Add per-page meta tags with react-helmet-async
-- [ ] Redesign homepage to reflect tool discovery positioning (not just stories)
-- [ ] Build tool directory schema in Supabase (name, category, url, open_source, description, pricing, use_cases)
-- [ ] Populate first 20-30 tools in the directory
-- [ ] Write 5 genuinely great free stories about real AI tools
-- [ ] Start LinkedIn content cadence (Nimit's personal account, 5x/week)
-- [ ] Plan first offline event (Bangalore or Mumbai, partner with an AI tool company)
-- [ ] Set up Beehiiv newsletter: "The Agentic AI Briefing"
-- [ ] Create "Submit Your Tool" form for inbound tool submissions
+### Milestone: rendering normalization complete
+- Updated the story detail hero image container to use the same square framing rule as the story grid.
+- The canonical blog/story cover display rule is now:
+  - square container
+  - `object-cover`
+  - slug-based PNG asset path under `public/images/stories/`
 
-### Decisions made:
-- Healthcare/impact stories stay but are NOT the highlight — tool discovery is primary
-- Revenue comes from tools paying for GTM (featured listings, sponsored stories, events)
-- Target audience: builders, developers, founders, students in India
-- Growth strategy: LinkedIn organic + offline events + college ambassadors + targeted ads
-- Comparables: Product Hunt, There's An AI For That, FutureTools
-- Grants before VCs (Google.org, AWS, Mozilla)
-
-## Session 2 — March 17, 2026 (afternoon)
-### What was done:
-- Generated 20 abstract illustrations for the site (warm earth-tone editorial style)
-- Built Supabase CMS integration (stories table, hooks, pages)
-- Created Stories listing page + StoryDetail page
-- Created admin interface for managing stories
-- Generated LinkedIn banner via Canva
-- Saved illustration style guide to `public/images/ILLUSTRATION-STYLE-GUIDE.md`
-- Full SEO audit completed — identified HashRouter as critical blocker
-- Comprehensive business strategy created (`BUSINESS_STRATEGY.md`)
-- Created `CLAUDE.md`, `AGENT.md`, `SESSION.md` for cross-session context
-- Budget estimated: ~₹5.5L over 6 months to acquire 5,000 readers
-
----
-
-## Session History
-
-### March 16, 2026
-- Initial site build with GSAP animations
-- Homepage with 6 sections (Hero, Problem, WhatWeDo, Architecture, JoinMovement)
-- Philosophy and Story pages
-- Supabase setup + stories CMS
-- 20 illustrations generated
-- LinkedIn banner created
-- OG/Twitter meta tags added
+### Milestone: verification complete
+- Confirmed all generated story-cover assets are square `1080x1080`.
+- Production build completed successfully with the updated generator and rendering code.
+- Runtime spot-check completed on:
+  - `/stories`
+  - `/stories/claude-code-developer-agent`
+- Visual result:
+  - story grid cards render in a uniform square system
+  - story detail hero now respects the same square framing instead of rendering at natural aspect ratio

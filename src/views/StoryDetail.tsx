@@ -141,12 +141,12 @@ export default function StoryDetail({ story }: Props) {
 
         {/* Banner image */}
         {story.image_url && (
-          <div className="rounded-2xl overflow-hidden mb-10 bg-[#E8E2D9]">
+          <div className="aspect-square rounded-2xl overflow-hidden mb-10 bg-[#E8E2D9]">
             <img
               src={story.image_url}
               alt={story.title}
               loading="lazy"
-              className="w-full object-cover"
+              className="w-full h-full object-cover"
             />
           </div>
         )}

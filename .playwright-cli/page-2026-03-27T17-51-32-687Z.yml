@@ -1,0 +1,70 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - link "Agentic AI For Good" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e6]:
+        - link "Home" [ref=e7] [cursor=pointer]:
+          - /url: /
+        - link "Philosophy" [ref=e8] [cursor=pointer]:
+          - /url: /philosophy
+        - link "Story" [ref=e9] [cursor=pointer]:
+          - /url: /story
+        - link "Stories" [ref=e10] [cursor=pointer]:
+          - /url: /stories
+        - link "Architecture" [ref=e11] [cursor=pointer]:
+          - /url: /
+        - link "Submit a Use Case" [ref=e12] [cursor=pointer]:
+          - /url: /story
+          - button "Submit a Use Case" [ref=e13]
+  - main [ref=e14]:
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]: Our Story
+        - heading "THE SOUL OF WHAT WE DO" [level=1] [ref=e19]
+        - paragraph [ref=e20]: "Every project has an origin. Ours began with a question: where is the real work?"
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - img "The Seed" [ref=e24]
+          - generic [ref=e25]:
+            - generic [ref=e26]: Where it began
+            - heading "The Seed" [level=2] [ref=e27]
+            - paragraph [ref=e28]: "We started with a simple observation: for every real agentic AI deployment, there were a hundred demos. The signal was drowning in noise. Builders were shipping incredible work—systems that saved lives, cut costs, and transformed industries—but no one was documenting it. We decided to change that."
+        - generic [ref=e29]:
+          - img "The Direction" [ref=e31]
+          - generic [ref=e32]:
+            - generic [ref=e33]: Why we do this
+            - heading "The Direction" [level=2] [ref=e34]
+            - paragraph [ref=e35]: Our mission is to surface the real work. We curate verified use cases, break down architectures, and highlight impact metrics. We believe that by showcasing what is actually working, we can help the entire field move faster—builders learning from builders, founders inspired by proof, researchers guided by evidence.
+        - generic [ref=e36]:
+          - img "The Horizon" [ref=e38]
+          - generic [ref=e39]:
+            - generic [ref=e40]: Where we are going
+            - heading "The Horizon" [level=2] [ref=e41]
+            - paragraph [ref=e42]: We envision a world where agentic AI is understood not through hype, but through results. Where every builder has access to the patterns, pitfalls, and proven approaches of those who came before. Where the conversation shifts from what AI might do, to what AI is already doing—responsibly, effectively, and for good.
+      - generic [ref=e44]:
+        - heading "Be Part of the Story" [level=3] [ref=e45]
+        - paragraph [ref=e46]: Are you building something with agentic AI? We would love to hear about it.
+        - generic [ref=e47]:
+          - generic [ref=e48]: Email address
+          - textbox "Email address" [ref=e49]:
+            - /placeholder: you@company.com
+          - button "Submit Your Story" [ref=e50]
+  - contentinfo [ref=e51]:
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - heading "Agentic AI For Good" [level=3] [ref=e54]
+        - paragraph [ref=e55]: Curating the real work behind agentic AI.
+        - generic [ref=e56]:
+          - link "Home" [ref=e57] [cursor=pointer]:
+            - /url: /
+          - link "Philosophy" [ref=e58] [cursor=pointer]:
+            - /url: /philosophy
+          - link "Our Story" [ref=e59] [cursor=pointer]:
+            - /url: /story
+          - link "Use Cases" [ref=e60] [cursor=pointer]:
+            - /url: /stories
+        - link "LinkedIn" [ref=e62] [cursor=pointer]:
+          - /url: https://linkedin.com/company/agentic-ai-for-good
+          - img [ref=e63]
+      - paragraph [ref=e68]: © 2026 Agentic AI For Good. All rights reserved.
