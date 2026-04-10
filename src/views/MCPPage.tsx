@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Terminal, Search, Package, Zap, Clock, Copy, Check } from 'lucide-react'
+import { Terminal, Search, Package, Zap, Clock, Copy, Check, Layers, GitBranch, Rss } from 'lucide-react'
 
 const CLAUDE_DESKTOP_CONFIG = `{
   "mcpServers": {
@@ -190,6 +190,71 @@ export default function MCPPage() {
                 </p>
               </div>
             )}
+          </div>
+        </div>
+
+        {/* Section 2.5 — Use Case Flow */}
+        <div className="mb-12">
+          <span className="micro-label text-[#D4754E] block mb-3">REAL-WORLD SCENARIOS</span>
+          <h2 className="display-heading text-2xl text-[#1A1A1A] mb-8">HOW DEVELOPERS USE IT</h2>
+
+          <div className="space-y-4">
+            {/* Scenario 1 */}
+            <div className="bg-white rounded-2xl border border-[#1A1A1A]/8 p-6 lg:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-[#D4754E]/10 flex items-center justify-center text-[#D4754E] flex-shrink-0 mt-0.5">
+                  <Search size={20} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="display-heading text-base text-[#1A1A1A] mb-1">Discover by use case, not by name</h3>
+                  <p className="text-sm text-[#6B6560] leading-relaxed mb-4">
+                    You&apos;re building a RAG pipeline and need a vector database. Instead of Googling and reading 10 comparison posts, ask Claude — with MCP, it queries our catalog directly and returns ranked, vetted options with install commands.
+                  </p>
+                  <div className="bg-[#F5F1EB] rounded-xl p-4 font-mono text-xs text-[#1A1A1A] leading-relaxed">
+                    <span className="text-[#D4754E]">You:</span> &ldquo;Find me a vector database that supports Python, has a hosted option, and a free tier&rdquo;<br />
+                    <span className="text-[#6B6560] mt-2 block"><span className="text-[#1A1A1A]">Claude:</span> Found 4 matching tools — Qdrant, Weaviate, Chroma, Pinecone... [via search_tools]</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Scenario 2 */}
+            <div className="bg-white rounded-2xl border border-[#1A1A1A]/8 p-6 lg:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-[#D4754E]/10 flex items-center justify-center text-[#D4754E] flex-shrink-0 mt-0.5">
+                  <GitBranch size={20} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="display-heading text-base text-[#1A1A1A] mb-1">Stack-aware recommendations</h3>
+                  <p className="text-sm text-[#6B6560] leading-relaxed mb-4">
+                    Paste your <span className="font-mono text-[#1A1A1A]">package.json</span> and ask what&apos;s missing. Claude reads your dependencies, calls <span className="font-mono text-[#1A1A1A]">suggest_for_stack</span>, and returns tools that integrate with your exact setup — no generic suggestions.
+                  </p>
+                  <div className="bg-[#F5F1EB] rounded-xl p-4 font-mono text-xs text-[#1A1A1A] leading-relaxed">
+                    <span className="text-[#D4754E]">You:</span> &ldquo;Here&apos;s my package.json. What AI tooling am I missing for production?&rdquo;<br />
+                    <span className="text-[#6B6560] mt-2 block"><span className="text-[#1A1A1A]">Claude:</span> You&apos;re using LangChain but missing an observability layer — here&apos;s what integrates... [via suggest_for_stack]</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Scenario 3 */}
+            <div className="bg-white rounded-2xl border border-[#1A1A1A]/8 p-6 lg:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-[#D4754E]/10 flex items-center justify-center text-[#D4754E] flex-shrink-0 mt-0.5">
+                  <Rss size={20} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="display-heading text-base text-[#1A1A1A] mb-1">Stay current without the noise</h3>
+                  <p className="text-sm text-[#6B6560] leading-relaxed mb-4">
+                    The AI tooling space moves fast. Ask Claude what was added this week and get a curated digest of new tools — filtered to categories you care about, with no marketing fluff.
+                  </p>
+                  <div className="bg-[#F5F1EB] rounded-xl p-4 font-mono text-xs text-[#1A1A1A] leading-relaxed">
+                    <span className="text-[#D4754E]">You:</span> &ldquo;What AI tools were added in the last 7 days?&rdquo;<br />
+                    <span className="text-[#6B6560] mt-2 block"><span className="text-[#1A1A1A]">Claude:</span> 3 new tools this week — 1 in Agents, 2 in Monitoring... [via whats_new]</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
