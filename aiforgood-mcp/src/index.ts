@@ -15,7 +15,7 @@ import {
 } from '@modelcontextprotocol/sdk/types.js'
 
 // API base URL - can be overridden with env var
-const API_BASE_URL = process.env.AIFORGOOD_API_URL || 'https://agenticaiforgood.com/api/tools'
+const API_BASE_URL = process.env.AGENTICAIFORGOOD_API_URL || 'https://agenticaiforgood.com/api/tools'
 
 // Tool definitions
 const SEARCH_TOOLS: Tool = {
@@ -339,7 +339,7 @@ function formatToolDetail(tool: any): string {
 // Server setup
 const server = new Server(
   {
-    name: 'aiforgood-mcp',
+    name: 'agentic-ai-for-good-mcp',
     version: '1.0.0',
   },
   {

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Tools', href: '/tools' },
+  { label: 'MCP', href: '/mcp' },
   { label: 'Stories', href: '/stories' },
   { label: 'Philosophy', href: '/philosophy' },
   { label: 'Architecture', href: '/#architecture' },
@@ -75,11 +76,15 @@ export default function Navigation() {
                   {link.label}
                 </Link>
               ))}
-              <Link href="/tools/submit">
+              <a
+                href="https://github.com/nimit2801/Agentic-AI-For-Good-Website/blob/main/CONTRIBUTING.md"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button className="bg-[#D4754E] hover:bg-[#C0653E] text-white rounded-full px-5 py-2 text-sm font-medium transition-all duration-200">
-                  Submit a Tool
+                  Contribute a Tool
                 </Button>
-              </Link>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -117,11 +122,16 @@ export default function Navigation() {
               {link.label}
             </Link>
           ))}
-          <Link href="/tools/submit" onClick={() => setIsMobileMenuOpen(false)}>
+          <a
+            href="https://github.com/nimit2801/Agentic-AI-For-Good-Website/blob/main/CONTRIBUTING.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             <Button className="bg-[#D4754E] hover:bg-[#C0653E] text-white rounded-full px-8 py-3 text-lg font-medium mt-4">
-              Submit a Tool
+              Contribute a Tool
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
     </>

@@ -1,10 +1,11 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Search, ArrowRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import gsap from 'gsap'
 
 export default function Hero() {
+  const [query, setQuery] = useState('')
   const sectionRef = useRef<HTMLElement>(null)
   const headlineRef = useRef<HTMLHeadingElement>(null)
   const subheadlineRef = useRef<HTMLParagraphElement>(null)
@@ -110,10 +111,13 @@ export default function Hero() {
             <input
               id="hero-search"
               type="text"
-              placeholder="Search use cases (e.g., 'healthcare scheduling')"
+              placeholder="Try: 'build a RAG pipeline', 'monitor LLM costs'..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter' && query.trim()) router.push('/tools?q=' + encodeURIComponent(query.trim())) }}
               className="w-full h-14 lg:h-16 bg-white border border-[#1A1A1A]/8 rounded-[18px] pl-14 pr-16 text-sm lg:text-base text-[#1A1A1A] placeholder:text-[#6B6560]/60 focus:outline-none focus:ring-2 focus:ring-[#D4754E]/30 transition-all duration-200"
             />
-            <button aria-label="Search" className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center text-white hover:bg-[#D4754E] transition-colors duration-200">
+            <button aria-label="Search" onClick={() => { if (query.trim()) router.push('/tools?q=' + encodeURIComponent(query.trim())) }} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center text-white hover:bg-[#D4754E] transition-colors duration-200">
               <ArrowRight size={18} />
             </button>
           </div>

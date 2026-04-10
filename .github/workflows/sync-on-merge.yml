@@ -1,0 +1,53 @@
+name: Sync Tools to Supabase
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'tools/**/*.yaml'
+
+jobs:
+  sync:
+    name: Generate embeddings and sync to Supabase
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed tool files
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'tools/**/*.yaml' | tr '\n' '\n')
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "Changed tool files:"
+          echo "$CHANGED"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install script dependencies
+        working-directory: scripts
+        run: npm install
+
+      - name: Validate (safety check before sync)
+        working-directory: scripts
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
+        run: npx tsx validate-tool.ts
+
+      - name: Sync to Supabase
+        working-directory: scripts
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: npx tsx sync-to-supabase.ts

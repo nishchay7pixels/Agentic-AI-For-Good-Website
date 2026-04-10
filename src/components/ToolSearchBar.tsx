@@ -8,22 +8,28 @@ import type { Tool } from '@/lib/supabase'
 interface ToolSearchBarProps {
   placeholder?: string
   className?: string
+  value?: string
+  onChange?: (v: string) => void
 }
 
 export default function ToolSearchBar({
   placeholder = 'Search tools, frameworks, use cases...',
   className = '',
+  value,
+  onChange,
 }: ToolSearchBarProps) {
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const effectiveValue = value !== undefined ? value : query
+
   // Debounce search query
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedQuery(query), 300)
+    const timer = setTimeout(() => setDebouncedQuery(effectiveValue), 300)
     return () => clearTimeout(timer)
-  }, [query])
+  }, [effectiveValue])
 
   const { results, loading } = useToolSearch(debouncedQuery, { limit: 5 })
   const showDropdown = isFocused && debouncedQuery.length > 1
@@ -45,16 +51,23 @@ export default function ToolSearchBar({
         <input
           ref={inputRef}
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={effectiveValue}
+          onChange={(e) => {
+            if (onChange) onChange(e.target.value)
+            else setQuery(e.target.value)
+          }}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setTimeout(() => setIsFocused(false), 150)}
           placeholder={placeholder}
           className="flex-1 bg-transparent text-[#1A1A1A] placeholder:text-[#6B6560]/50 text-sm outline-none"
         />
-        {query && (
+        {effectiveValue && (
           <button
-            onClick={() => { setQuery(''); inputRef.current?.focus() }}
+            onClick={() => {
+              if (onChange) onChange('')
+              else setQuery('')
+              inputRef.current?.focus()
+            }}
             className="text-[#6B6560]/50 hover:text-[#1A1A1A] transition-colors"
           >
             <X size={16} />

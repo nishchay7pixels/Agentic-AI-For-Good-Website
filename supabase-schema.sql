@@ -44,7 +44,6 @@ create table if not exists tools (
   is_open_source boolean default false,
   featured boolean default false,
   approved boolean default false,
-  submitted_by text,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -58,25 +57,26 @@ create index if not exists tools_slug_idx on tools (slug);
 create index if not exists tools_category_idx on tools (category);
 create index if not exists tools_approved_idx on tools (approved, created_at desc);
 
--- ===== TOOL_SUBMISSIONS TABLE (Submit Your Tool Form) =====
-create table if not exists tool_submissions (
-  id uuid primary key default gen_random_uuid(),
-  tool_name text not null,
-  tool_url text not null,
-  description text,
-  submitter_email text,
-  submitter_name text,
-  status text default 'pending', -- 'pending', 'approved', 'rejected'
-  created_at timestamptz default now()
+-- ===== SUBSCRIBERS TABLE (Email Subscribers) =====
+CREATE TABLE IF NOT EXISTS subscribers (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email text UNIQUE NOT NULL,
+  source text DEFAULT 'website',
+  created_at timestamptz DEFAULT now()
 );
 
-alter table tool_submissions enable row level security;
+ALTER TABLE subscribers ENABLE ROW LEVEL SECURITY;
 
-create policy "Anyone can submit a tool" on tool_submissions for insert with check (true);
-create policy "Service role manages submissions" on tool_submissions for all using (auth.role() = 'service_role');
+CREATE POLICY "Service role full access on subscribers"
+  ON subscribers FOR ALL
+  USING (auth.role() = 'service_role');
 
-create index if not exists tool_submissions_status_idx on tool_submissions (status);
-create index if not exists tool_submissions_created_at_idx on tool_submissions (created_at desc);
+CREATE POLICY "Anyone can subscribe"
+  ON subscribers FOR INSERT
+  WITH CHECK (true);
+
+CREATE INDEX IF NOT EXISTS subscribers_email_idx ON subscribers (email);
+CREATE INDEX IF NOT EXISTS subscribers_created_at_idx ON subscribers (created_at DESC);
 
 -- ===== HELPER FUNCTION =====
 create or replace function update_updated_at_column()

@@ -1,4 +1,4 @@
-# AIForgood MCP Server
+# Agentic AI For Good MCP Server
 
 MCP (Model Context Protocol) server for discovering AI tools from [Agentic AI For Good](https://agenticaiforgood.com).
 
@@ -18,9 +18,9 @@ Add to your `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "aiforgood": {
+    "agenticaiforgood": {
       "command": "npx",
-      "args": ["-y", "aiforgood-mcp"]
+      "args": ["-y", "agentic-ai-for-good-mcp"]
     }
   }
 }
@@ -30,8 +30,8 @@ Add to your `claude_desktop_config.json`:
 
 ```bash
 # Clone and setup
-git clone https://github.com/agentic-ai-for-good/aiforgood-mcp.git
-cd aiforgood-mcp
+git clone https://github.com/agentic-ai-for-good/agentic-ai-for-good-mcp.git
+cd agentic-ai-for-good-mcp
 npm install
 
 # Build
@@ -106,7 +106,7 @@ See recently added tools.
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `AIFORGOOD_API_URL` | Custom API endpoint | `https://agenticaiforgood.com/api/tools` |
+| `AGENTICAIFORGOOD_API_URL` | Custom API endpoint | `https://agenticaiforgood.com/api/tools` |
 
 ## License
 

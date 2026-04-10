@@ -1,0 +1,29 @@
+name: LangChain
+description: A framework for building LLM-powered applications with composable chains, agents, tools, and memory.
+tagline: The standard library for LLM application development
+
+github_url: https://github.com/langchain-ai/langchain
+website_url: https://langchain.com
+docs_url: https://python.langchain.com/docs
+
+install_command: pip install langchain
+
+category: Agents
+tags: [python, javascript, llm, agents, rag, chains, memory]
+pricing: free
+is_open_source: true
+license: MIT
+
+problem_solved: |
+  Building LLM applications requires wiring together prompts, APIs, memory, tools, and external
+  data — and doing this from scratch means reinventing the same boilerplate for every project.
+  LangChain solves this by providing a unified abstraction layer: chains compose LLM calls
+  sequentially, agents decide what tools to call at runtime, and memory persists context across
+  turns. It's the difference between assembling components vs soldering circuits by hand.
+
+use_cases:
+  - Build a RAG pipeline that answers questions from your company's PDF documents using vector retrieval
+  - Create an autonomous research agent that searches the web, reads pages, and produces a structured report
+  - Build a customer support chatbot with conversation memory that remembers previous interactions
+  - Generate structured JSON output from unstructured text using output parsers
+  - Orchestrate multi-step workflows where each LLM call feeds into the next

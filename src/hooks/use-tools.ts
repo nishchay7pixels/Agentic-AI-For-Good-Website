@@ -153,55 +153,6 @@ export function useToolSearch(query: string, options?: UseToolSearchOptions) {
   return { results, loading, error, method };
 }
 
-// Hook for submitting a new tool
-export interface ToolSubmissionData {
-  tool_name: string;
-  tool_url: string;
-  description?: string;
-  category?: string;
-  submitter_email?: string;
-  submitter_name?: string;
-}
-
-interface SubmitToolResult {
-  success: boolean;
-  error?: string;
-  submission?: { id: string };
-}
-
-export function useSubmitTool() {
-  const [submitting, setSubmitting] = useState(false);
-
-  const submitTool = useCallback(async (data: ToolSubmissionData): Promise<SubmitToolResult> => {
-    setSubmitting(true);
-    try {
-      const response = await fetch('/api/tools/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        return { success: false, error: result.error || 'Submission failed' };
-      }
-
-      return { success: true, submission: result.submission };
-    } catch (err) {
-      return {
-        success: false,
-        error: err instanceof Error ? err.message : 'Submission failed',
-      };
-    } finally {
-      setSubmitting(false);
-    }
-  }, []);
-
-  return { submitTool, submitting };
-}
 
 // Hook for fetching similar tools based on a tool's category and tags
 export function useSimilarTools(toolId: string, limit: number = 3) {

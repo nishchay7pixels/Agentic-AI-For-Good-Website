@@ -1,11 +1,11 @@
 {
-  "name": "aiforgood-mcp",
+  "name": "agentic-ai-for-good-mcp",
   "version": "1.0.0",
-  "description": "MCP server for Agentic AI For Good tool discovery",
+  "description": "MCP server for Agentic AI For Good — discover AI tools inside Claude",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "aiforgood-mcp": "dist/index.js"
+    "agentic-ai-for-good-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",

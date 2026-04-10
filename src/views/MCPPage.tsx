@@ -1,0 +1,260 @@
+'use client'
+import { useState } from 'react'
+import { Terminal, Search, Package, Zap, Clock, Copy, Check } from 'lucide-react'
+
+const CLAUDE_DESKTOP_CONFIG = `{
+  "mcpServers": {
+    "agenticaiforgood": {
+      "command": "npx",
+      "args": ["-y", "agentic-ai-for-good-mcp"]
+    }
+  }
+}`
+
+const MCP_JSON_CONFIG = `{
+  "mcpServers": {
+    "agenticaiforgood": {
+      "command": "npx",
+      "args": ["-y", "agentic-ai-for-good-mcp"]
+    }
+  }
+}`
+
+const EXAMPLE_PROMPTS = [
+  'Find me a vector database for Python with free tier',
+  'Show me tools for building RAG applications',
+  'What AI tools were added this week?',
+  'What tools work well with Next.js and Supabase?',
+]
+
+const TOOLS = [
+  {
+    icon: <Search size={20} />,
+    name: 'search_tools',
+    description: 'Find AI tools by natural language query across our entire catalog.',
+    prompt: '"Find me a vector database for Python with a free tier"',
+  },
+  {
+    icon: <Package size={20} />,
+    name: 'get_tool_detail',
+    description: 'Get full detail on any tool: install command, use cases, and links.',
+    prompt: '"Tell me everything about LangChain"',
+  },
+  {
+    icon: <Zap size={20} />,
+    name: 'suggest_for_stack',
+    description: 'Get recommendations based on your package.json or requirements.txt.',
+    prompt: '"What tools am I missing? Here\'s my package.json: ..."',
+  },
+  {
+    icon: <Clock size={20} />,
+    name: 'whats_new',
+    description: 'See recently added tools in the last N days.',
+    prompt: '"What AI tools were added this week?"',
+  },
+]
+
+function CopyButton({ text, className = '' }: { text: string; className?: string }) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <button
+      onClick={handleCopy}
+      aria-label={copied ? 'Copied' : 'Copy to clipboard'}
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+        copied
+          ? 'bg-[#D4754E]/15 text-[#D4754E]'
+          : 'bg-[#1A1A1A]/8 text-[#6B6560] hover:bg-[#1A1A1A]/12 hover:text-[#1A1A1A]'
+      } ${className}`}
+    >
+      {copied ? <Check size={12} /> : <Copy size={12} />}
+      {copied ? 'Copied' : 'Copy'}
+    </button>
+  )
+}
+
+export default function MCPPage() {
+  const [activeTab, setActiveTab] = useState<'desktop' | 'code'>('desktop')
+
+  return (
+    <section className="min-h-screen bg-[#F5F1EB] pt-28 pb-20 px-6 lg:px-[6vw]">
+      <div className="max-w-[860px] mx-auto">
+
+        {/* Section 1 — Hero */}
+        <div className="mb-16">
+          <span className="micro-label text-[#D4754E] block mb-3">FOR DEVELOPERS</span>
+          <h1 className="display-heading text-[clamp(28px,3.5vw,52px)] text-[#1A1A1A] mb-6 max-w-2xl">
+            USE OUR TOOL CATALOG INSIDE CLAUDE
+          </h1>
+          <p className="text-[#6B6560] text-base lg:text-lg max-w-2xl leading-relaxed">
+            The agentic-ai-for-good-mcp server gives Claude access to our full AI tool database — search by use case, get install commands, and get recommendations based on your stack.
+          </p>
+        </div>
+
+        {/* Section 2 — Install Card */}
+        <div className="bg-white rounded-2xl border border-[#1A1A1A]/8 mb-12 overflow-hidden">
+          <div className="p-6 border-b border-[#1A1A1A]/8">
+            <div className="flex items-center gap-2 mb-1">
+              <Terminal size={16} className="text-[#D4754E]" />
+              <span className="micro-label text-[#D4754E]">INSTALL</span>
+            </div>
+            <h2 className="display-heading text-xl text-[#1A1A1A]">ADD TO CLAUDE IN 2 STEPS</h2>
+          </div>
+
+          {/* Tab switcher */}
+          <div className="flex border-b border-[#1A1A1A]/8">
+            <button
+              onClick={() => setActiveTab('desktop')}
+              className={`flex-1 px-6 py-3 text-sm font-medium transition-all duration-200 ${
+                activeTab === 'desktop'
+                  ? 'text-[#1A1A1A] border-b-2 border-[#D4754E] bg-[#F5F1EB]/50'
+                  : 'text-[#6B6560] hover:text-[#1A1A1A] hover:bg-[#F5F1EB]/30'
+              }`}
+            >
+              Claude Desktop
+            </button>
+            <button
+              onClick={() => setActiveTab('code')}
+              className={`flex-1 px-6 py-3 text-sm font-medium transition-all duration-200 ${
+                activeTab === 'code'
+                  ? 'text-[#1A1A1A] border-b-2 border-[#D4754E] bg-[#F5F1EB]/50'
+                  : 'text-[#6B6560] hover:text-[#1A1A1A] hover:bg-[#F5F1EB]/30'
+              }`}
+            >
+              Claude Code
+            </button>
+          </div>
+
+          <div className="p-6">
+            {activeTab === 'desktop' ? (
+              <div className="space-y-8">
+                {/* Step 1 */}
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="w-6 h-6 rounded-full bg-[#D4754E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                      1
+                    </span>
+                    <p className="text-sm font-medium text-[#1A1A1A]">Edit your Claude Desktop config</p>
+                  </div>
+                  <p className="text-xs text-[#6B6560] font-mono mb-3 pl-9">
+                    ~/Library/Application Support/Claude/claude_desktop_config.json
+                  </p>
+                  <div className="relative rounded-xl overflow-hidden">
+                    <div className="bg-[#1A1A1A] p-4 pr-16">
+                      <pre className="text-sm text-[#E8E2D9] font-mono leading-relaxed overflow-x-auto whitespace-pre">
+                        {CLAUDE_DESKTOP_CONFIG}
+                      </pre>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <CopyButton text={CLAUDE_DESKTOP_CONFIG} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-6 h-6 rounded-full bg-[#D4754E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                      2
+                    </span>
+                    <p className="text-sm font-medium text-[#1A1A1A]">Restart Claude Desktop</p>
+                  </div>
+                  <p className="text-xs text-[#6B6560] pl-9 mt-1">
+                    Quit and reopen Claude Desktop. The Agentic AI For Good tools will appear in the MCP panel.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p className="text-sm text-[#6B6560] mb-3">
+                  Add to your project&apos;s <span className="font-mono text-[#1A1A1A]">.mcp.json</span>:
+                </p>
+                <div className="relative rounded-xl overflow-hidden">
+                  <div className="bg-[#1A1A1A] p-4 pr-16">
+                    <pre className="text-sm text-[#E8E2D9] font-mono leading-relaxed overflow-x-auto whitespace-pre">
+                      {MCP_JSON_CONFIG}
+                    </pre>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <CopyButton text={MCP_JSON_CONFIG} />
+                  </div>
+                </div>
+                <p className="text-xs text-[#6B6560] mt-3">
+                  Claude Code will pick up the server automatically on next launch.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Section 3 — 4 Tool Cards */}
+        <div className="mb-12">
+          <span className="micro-label text-[#D4754E] block mb-3">TOOLS AVAILABLE</span>
+          <h2 className="display-heading text-2xl text-[#1A1A1A] mb-8">WHAT CLAUDE CAN DO</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {TOOLS.map((tool) => (
+              <div
+                key={tool.name}
+                className="bg-white rounded-2xl border border-[#1A1A1A]/8 p-6 hover:border-[#D4754E]/30 transition-all duration-200"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 rounded-xl bg-[#D4754E]/10 flex items-center justify-center text-[#D4754E] flex-shrink-0">
+                    {tool.icon}
+                  </div>
+                  <span className="micro-label text-[#1A1A1A] font-mono">{tool.name}</span>
+                </div>
+                <p className="text-sm text-[#6B6560] leading-relaxed mb-3">{tool.description}</p>
+                <p className="text-xs text-[#6B6560]/80 italic">{tool.prompt}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Section 4 — Example Prompts */}
+        <div className="mb-12">
+          <div className="bg-white rounded-2xl border border-[#1A1A1A]/8 p-6 lg:p-8">
+            <span className="micro-label text-[#D4754E] block mb-3">TRY ASKING CLAUDE</span>
+            <h2 className="display-heading text-xl text-[#1A1A1A] mb-6">EXAMPLE PROMPTS</h2>
+
+            <div className="space-y-3">
+              {EXAMPLE_PROMPTS.map((prompt) => (
+                <div
+                  key={prompt}
+                  className="flex items-center justify-between gap-4 p-4 bg-[#F5F1EB] rounded-xl"
+                >
+                  <p className="text-sm text-[#1A1A1A] font-mono leading-snug flex-1">{prompt}</p>
+                  <CopyButton text={prompt} className="flex-shrink-0" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Section 5 — Contribute CTA */}
+        <div className="p-8 bg-white rounded-2xl border border-[#1A1A1A]/5 text-center">
+          <span className="micro-label text-[#D4754E] block mb-3">Missing a tool?</span>
+          <h3 className="display-heading text-xl text-[#1A1A1A] mb-3">ADD IT VIA GITHUB PR</h3>
+          <p className="text-[#6B6560] text-sm mb-6 max-w-md mx-auto">
+            The MCP server reads from the same catalog. Add a tool via pull request and it&apos;s available to everyone&apos;s Claude instantly.
+          </p>
+          <a
+            href="https://github.com/nimit2801/Agentic-AI-For-Good-Website/blob/main/CONTRIBUTING.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#D4754E] hover:bg-[#C0653E] text-white rounded-full px-6 py-3 text-sm font-medium transition-all duration-200"
+          >
+            Open Contribution Guide
+          </a>
+        </div>
+
+      </div>
+    </section>
+  )
+}

@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Loader2, SlidersHorizontal } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import gsap from 'gsap'
@@ -22,6 +23,7 @@ const categories = [
 const pricingFilters = ['All', 'free', 'freemium', 'paid']
 
 export default function Tools() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const initialQuery = searchParams.get('q') ?? ''
 
@@ -32,6 +34,14 @@ export default function Tools() {
 
   const sectionRef = useRef<HTMLElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
+
+  // URL sync
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (searchQuery) params.set('q', searchQuery)
+    else params.delete('q')
+    router.replace(`/tools?${params.toString()}`, { scroll: false })
+  }, [searchQuery, router])
 
   const { tools, loading: toolsLoading, error: toolsError } = useTools({
     category: activeCategory !== 'All' ? activeCategory : undefined,
@@ -92,9 +102,15 @@ export default function Tools() {
 
         {/* Search bar */}
         <ToolSearchBar
-          placeholder="Search by tool name, use case, or technology..."
-          className="max-w-2xl mb-6"
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Search by use case, tool name, or technology..."
+          className="max-w-2xl mb-2"
         />
+
+        <p className="text-xs text-[#6B6560]/70 mb-4 font-mono">
+          Semantic search — describe what you want to build
+        </p>
 
         {/* Filters row */}
         <div className="flex items-center gap-3 flex-wrap">
@@ -205,19 +221,21 @@ export default function Tools() {
         </div>
       )}
 
-      {/* Submit CTA */}
+      {/* Contribute CTA */}
       {!loading && (
         <div className="max-w-[1200px] mx-auto mt-16 p-8 bg-white rounded-2xl border border-[#1A1A1A]/5 text-center">
           <span className="micro-label text-[#D4754E] block mb-3">Missing a tool?</span>
-          <h3 className="display-heading text-xl text-[#1A1A1A] mb-3">SUBMIT A TOOL</h3>
+          <h3 className="display-heading text-xl text-[#1A1A1A] mb-3">CONTRIBUTE A TOOL</h3>
           <p className="text-[#6B6560] text-sm mb-6 max-w-md mx-auto">
-            Know a great AI tool that belongs here? Help the community by submitting it for review.
+            Add your favorite AI tool to our catalog by opening a pull request. It takes about 5 minutes.
           </p>
           <a
-            href="/tools/submit"
+            href="https://github.com/nimit2801/Agentic-AI-For-Good-Website/blob/main/CONTRIBUTING.md"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#D4754E] hover:bg-[#C0653E] text-white rounded-full px-6 py-3 text-sm font-medium transition-all duration-200"
           >
-            Submit a Tool
+            Open Contribution Guide
           </a>
         </div>
       )}

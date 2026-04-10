@@ -36,7 +36,6 @@ export type Tool = {
   is_open_source: boolean;
   featured: boolean;
   approved: boolean;
-  submitted_by: string | null;
   created_at: string;
   updated_at: string;
   tagline?: string;
@@ -51,15 +50,4 @@ export type Tool = {
   integration_guide?: string;
   github_stars?: number;
   maintained?: boolean;
-};
-
-export type ToolSubmission = {
-  id: string;
-  tool_name: string;
-  tool_url: string;
-  description: string | null;
-  submitter_email: string | null;
-  submitter_name: string | null;
-  status: 'pending' | 'approved' | 'rejected';
-  created_at: string;
 };

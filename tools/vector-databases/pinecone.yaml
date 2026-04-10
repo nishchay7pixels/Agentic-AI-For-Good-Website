@@ -1,0 +1,28 @@
+name: Pinecone
+description: A managed vector database built for production AI applications with real-time indexing and millisecond query latency at any scale.
+tagline: The vector database built for production
+
+website_url: https://pinecone.io
+docs_url: https://docs.pinecone.io
+
+install_command: pip install pinecone-client
+
+category: Vector DB
+tags: [vector-database, embeddings, semantic-search, rag, similarity-search]
+pricing: freemium
+is_open_source: false
+
+problem_solved: |
+  Running semantic search on millions of high-dimensional vectors requires specialized indexing
+  algorithms (like HNSW or IVFFlat) that traditional databases simply weren't built for.
+  Pinecone removes the infrastructure complexity entirely — no managing indexes, no tuning
+  parameters, no worrying about scale. You get a fully managed vector store that handles
+  real-time upserts, filtered queries, and namespacing out of the box, so teams can focus on
+  building AI features instead of database operations.
+
+use_cases:
+  - Build a semantic search engine over your product catalog that understands natural language queries
+  - Power a RAG chatbot that retrieves relevant document chunks before sending them to an LLM
+  - Find semantically similar users or items for recommendation systems
+  - Store and query code embeddings to enable natural language code search across a large codebase
+  - Run real-time anomaly detection by comparing new vectors against historical patterns
