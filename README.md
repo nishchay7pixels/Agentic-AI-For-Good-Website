@@ -121,7 +121,21 @@ Tests use Vitest + `@testing-library/react`.
 
 The catalog is accessible via the Model Context Protocol:
 
-### Hosted HTTP (recommended)
+### Claude CLI (recommended)
+
+Add at user level (global across all projects):
+
+```bash
+claude mcp add --scope user --transport http agenticaiforgood https://agenticaiforgood.com/api/mcp
+```
+
+Or add at project level only:
+
+```bash
+claude mcp add --scope project --transport http agenticaiforgood https://agenticaiforgood.com/api/mcp
+```
+
+### Hosted HTTP (manual config)
 
 Add to Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on Mac):
 

@@ -30,6 +30,8 @@ const MCP_JSON_CONFIG = `{
   }
 }`
 
+const CLAUDE_CLI_COMMAND = 'claude mcp add --scope user --transport http agenticaiforgood https://agenticaiforgood.com/api/mcp'
+
 const EXAMPLE_PROMPTS = [
   'Find me a vector database for Python with free tier',
   'Show me tools for building RAG applications',
@@ -90,7 +92,7 @@ function CopyButton({ text, className = '' }: { text: string; className?: string
 }
 
 export default function MCPPage() {
-  const [activeTab, setActiveTab] = useState<'http' | 'desktop' | 'code'>('http')
+  const [activeTab, setActiveTab] = useState<'http' | 'cli' | 'desktop' | 'code'>('http')
 
   return (
     <section className="min-h-screen bg-[#F5F1EB] pt-28 pb-20 px-6 lg:px-[6vw]">
@@ -128,6 +130,16 @@ export default function MCPPage() {
               }`}
             >
               HTTP ✦ Recommended
+            </button>
+            <button
+              onClick={() => setActiveTab('cli')}
+              className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                activeTab === 'cli'
+                  ? 'text-[#1A1A1A] border-b-2 border-[#D4754E] bg-[#F5F1EB]/50'
+                  : 'text-[#6B6560] hover:text-[#1A1A1A] hover:bg-[#F5F1EB]/30'
+              }`}
+            >
+              Claude CLI
             </button>
             <button
               onClick={() => setActiveTab('desktop')}
@@ -191,6 +203,47 @@ export default function MCPPage() {
                   </div>
                   <p className="text-xs text-[#6B6560] pl-9 mt-1">
                     The server runs on our infrastructure — always up-to-date with the latest catalog, zero maintenance on your end.
+                  </p>
+                </div>
+              </div>
+            ) : activeTab === 'cli' ? (
+              <div className="space-y-8">
+                {/* Step 1 */}
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="w-6 h-6 rounded-full bg-[#D4754E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                      1
+                    </span>
+                    <p className="text-sm font-medium text-[#1A1A1A]">Run the Claude CLI command</p>
+                  </div>
+                  <p className="text-xs text-[#6B6560] mb-3 pl-9">
+                    Adds the MCP server at the user level (global across all projects). Requires Claude CLI installed.
+                  </p>
+                  <div className="relative rounded-xl overflow-hidden">
+                    <div className="bg-[#1A1A1A] p-4 pr-16">
+                      <pre className="text-sm text-[#E8E2D9] font-mono leading-relaxed overflow-x-auto whitespace-pre">
+                        {CLAUDE_CLI_COMMAND}
+                      </pre>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <CopyButton text={CLAUDE_CLI_COMMAND} />
+                    </div>
+                  </div>
+                  <p className="text-xs text-[#6B6560] mt-3 pl-9">
+                    The <span className="font-mono">--scope user</span> flag makes it available across all projects. Use <span className="font-mono">--scope project</span> for project-only.
+                  </p>
+                </div>
+
+                {/* Step 2 */}
+                <div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-6 h-6 rounded-full bg-[#D4754E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                      2
+                    </span>
+                    <p className="text-sm font-medium text-[#1A1A1A]">Start using it</p>
+                  </div>
+                  <p className="text-xs text-[#6B6560] pl-9 mt-1">
+                    The server is immediately available in Claude Desktop, Claude Code, or any Claude CLI session.
                   </p>
                 </div>
               </div>
