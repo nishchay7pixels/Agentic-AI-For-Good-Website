@@ -1,10 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/health",
-      "destination": "/api/health"
-    }
-  ],
   "crons": [
     {
       "path": "/api/cron/sync-github-stars",
